@@ -1,0 +1,33 @@
+{% extends 'heritagesites/base.html' %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+
+    <article>
+      <header>
+        <h2>Countries and Areas</h2>
+      </header>
+    
+      <!-- https://www.w3schools.com/bootstrap4/bootstrap_pagination.asp -->
+      {% include 'heritagesites/pagination.html' %}
+    
+      {% if countries %}
+        {% for country in countries %}
+          <div class="row">
+            <div class="col-sm-5">
+              <p><a href="{% url 'country_area_detail' country.pk %}">{{ country.country_area_name }}</a></p>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No Heritage countries are available to view.</p>
+      {% endif %}
+    
+      <p>Count: {{ countries.count }}</p>
+    </article>
+
+  {% else %}
+    <a href="{% url 'login' %}">Log in</a>
+  {% endif %}
+
+{% endblock content %}}
